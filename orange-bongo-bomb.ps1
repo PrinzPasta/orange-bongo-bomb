@@ -15,8 +15,12 @@
 
 #>
 
+$c = Get-Credential
+Connect-AzureAD -Credential $c
+
 Function Show-Menu
 {
+     
      param (
            [string]$Title = "Manage 'who' can create Microsoft365-Groups in your Tenant"
      )
@@ -24,6 +28,8 @@ Function Show-Menu
      Write-Host "=============================================================="
      Write-Host "| $Title |"
      Write-Host "=============================================================="
+     Write-Host ""
+     Write-Host "Logged in as: "  $Cred.Username "! "
      Write-Host ""
      Write-Host "Available Options:"
      Write-Host "------------------"
@@ -36,8 +42,6 @@ Function Show-Menu
 
 Function Opt1VerifyRestrictions
 {
-Connect-AzureAD
-
 ## Get all Settings from Group.Unified AAD-SettingsTemplate and store information into $settings
 
 $Setting = Get-AzureADDirectorySetting | ? { $_.DisplayName -eq "Group.Unified"}
@@ -75,7 +79,6 @@ Function Opt2RestrictM365GrpCreation
      
      Write-Host 'Please login as Global Administrator in the prompted window...' -ForegroundColor Yellow -BackgroundColor DarkGreen
      
-     Connect-AzureAD
 
      Write-host 'Running script to allow M365-Group creation only for Members of the following AAD Security Group: ' -ForegroundColor Yellow -BackgroundColor DarkGreen `n
      Write-host $GroupName -ForegroundColor Yellow -BackgroundColor DarkGreen
@@ -111,7 +114,6 @@ Write-Host 'Please login as Global Administrator in the prompted window...' -For
 $GroupName = ""
 $AllowGroupCreation = $True
 
-Connect-AzureAD
 
 Write-host 'Running script to allow all users in your tenant to create M365-Groups' -ForegroundColor Yellow -BackgroundColor DarkGreen
 
@@ -143,7 +145,7 @@ do
 {
      Show-Menu
      Write-Host ""
-     $menuInput = Read-Host "-->What would you like to do? ('Q' to quit)"
+     $menuInput = Read-Host "-->What would you like to do? ('q' to quit)"
      switch ($menuInput)
      {
            '1' {
