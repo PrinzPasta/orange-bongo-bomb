@@ -77,9 +77,6 @@ Function Opt2RestrictM365GrpCreation
 
      $AllowGroupCreation = $False
      
-     Write-Host 'Please login as Global Administrator in the prompted window...' -ForegroundColor Yellow -BackgroundColor DarkGreen
-     
-
      Write-host 'Running script to allow M365-Group creation only for Members of the following AAD Security Group: ' -ForegroundColor Yellow -BackgroundColor DarkGreen `n
      Write-host $GroupName -ForegroundColor Yellow -BackgroundColor DarkGreen
           
